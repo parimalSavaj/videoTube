@@ -40,4 +40,12 @@
 
 bcrypt for password hashing.
 
-jwt for used side storing data.
+jwt for user side storing data.
+
+> `step 6`
+
+**how to upload file**
+
+for any type of file like image,video etc.. hear used cloudinary for stored and multer for file handel.
+
+scenario for any type of file upload :- first we stored this file is local server for temporary and after we upload on cloudinary than removed for local, for local stored in DiskStorage.
