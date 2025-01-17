@@ -1,3 +1,5 @@
+## setup steps for project.
+
 > `step 1`
 
 **first setup all project file.**
@@ -49,3 +51,17 @@ jwt for user side storing data.
 for any type of file like image,video etc.. hear used cloudinary for stored and multer for file handel.
 
 scenario for any type of file upload :- first we stored this file is local server for temporary and after we upload on cloudinary than removed for local, for local stored in DiskStorage.
+
+## start coding...
+
+> `1. Register User.`
+
+- get user details from frontend
+- validation
+- check if user already exists: (using username, email)
+- check for images, check for avatar
+- upload them to cloudinary, avatar and images
+- create user object - create entry in db
+- check for user creation
+- remove password and refresh token field from response
+- return res

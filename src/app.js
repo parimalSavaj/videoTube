@@ -34,10 +34,10 @@ app.use(express.static("public"));
 //todo: for set and get cookie data from user.
 app.use(cookieParser());
 
-//* router import
+//todo: router import
 import userRoutes from "./routes/user.routes.js";
 
-//* routers declaration
+//todo: routers declaration
 app.use("/api/v1/users", userRoutes);
 
 export default app;
