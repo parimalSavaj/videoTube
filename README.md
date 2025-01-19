@@ -65,3 +65,19 @@ scenario for any type of file upload :- first we stored this file is local serve
 - check for user creation
 - remove password and refresh token field from response
 - return res
+- handel cover image if not so not give an error.
+
+> `2. Loging User.`
+
+- get login details from req.body
+- validation based on email or username
+- check user is currect or not
+- check password by bcrypt
+- access & refersh token genret[set refresh token on user object]
+- this token's send on cookie
+
+> `3. Logout User.`
+
+- user add inside the request
+- remove refresh token from user object
+- cookies clear.
