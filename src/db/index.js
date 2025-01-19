@@ -1,7 +1,12 @@
+import { configDotenv } from "dotenv";
+configDotenv();
 import mongoose from "mongoose";
 import { DB_NAME } from "../constants.js";
 
+console.log("out side ",process.env.DEMO);
+
 const connectDB = async () => {
+  console.log("in side ",process.env.DEMO);
   try {
     const connectionInstance = await mongoose.connect(
       `${process.env.MONGODB_URL}/${DB_NAME}`

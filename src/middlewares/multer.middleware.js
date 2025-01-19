@@ -1,12 +1,18 @@
+import fs from "fs";
 import multer from "multer";
+
+// Ensure the directory exists
+const tempDir = "./public/temp";
+if (!fs.existsSync(tempDir)) {
+  fs.mkdirSync(tempDir, { recursive: true });
+}
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./public/temp");
+    cb(null, tempDir);
   },
   filename: function (req, file, cb) {
-    // cb(null, file.originalname);
-    cb(null, file.originalname + "-" + Date.now());
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
