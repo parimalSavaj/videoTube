@@ -81,3 +81,15 @@ scenario for any type of file upload :- first we stored this file is local serve
 - user add inside the request
 - remove refresh token from user object
 - cookies clear.
+
+> `4. refresh token used-case.`
+
+`why?`
+
+this refresh token used for if over access token has been appear so for frontend side developer send one request for get new access token.
+
+now, how to refresh; get one request than follow below step.
+
+- get refresh token from cookies or body(if applition.)
+- validat this token is exists or not.
+- not decode using jwt and get user details.
