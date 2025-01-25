@@ -38,7 +38,7 @@
 
 > `step 5`
 
-**write user and video model && used jwt and bcrypt**
+**used jwt and bcrypt**
 
 bcrypt for password hashing.
 
@@ -48,11 +48,13 @@ jwt for user side storing data.
 
 **how to upload file**
 
-for any type of file like image,video etc.. hear used cloudinary for stored and multer for file handel.
+for any type of file like image, video etc.. hear used cloudinary for stored and multer for file handel.
 
 scenario for any type of file upload :- first we stored this file is local server for temporary and after we upload on cloudinary than removed for local, for local stored in DiskStorage.
 
 ## start coding...
+
+> **write user and video model**
 
 > `1. Register User.`
 
@@ -67,13 +69,13 @@ scenario for any type of file upload :- first we stored this file is local serve
 - return res
 - handel cover image if not so not give an error.
 
-> `2. Loging User.`
+> `2. Login User.`
 
 - get login details from req.body
 - validation based on email or username
-- check user is currect or not
+- check user is correct or not
 - check password by bcrypt
-- access & refersh token genret[set refresh token on user object]
+- access & refresh token generate[set refresh token on user object]
 - this token's send on cookie
 
 > `3. Logout User.`
@@ -90,6 +92,47 @@ this refresh token used for if over access token has been appear so for frontend
 
 now, how to refresh; get one request than follow below step.
 
-- get refresh token from cookies or body(if applition.)
-- validat this token is exists or not.
-- not decode using jwt and get user details.
+- get refresh token from cookies or body(if application.)
+- validate this token is exists or not.
+- decode using jwt and get user details.
+
+> `5. change password`
+
+- get oldPassword and newPassword from req.body (if you need conformPassword, so you use.)
+- in this route we add _auth middleware_ so access _req.user_.
+- so get user from database.
+- check oldPassword is correct or not using isPasswordCorrect method of user model.
+- setup new password; here userSchema.pre method automatic used.
+- send response.
+
+> `6. get current user`
+
+**why ?**
+
+based on it's used case,...
+
+- if user is login so auth middleware is run and we can get using req.user.
+- this req.user return.
+
+> `7. update user details.`
+
+**_this is only updates text details not files or photo's. for batter way._**
+
+- get details from req.body and validate.
+- we can get user using req.user; because auth middleware is run.
+- find id and update it's details.
+- send new details using response.
+
+**_update user avatar_**
+
+for this type of info update, write different routs for batter way.
+
+- for this rout used mutter and auth two middleware, so access of req.file(not files !?) and req.user.
+- get avatar local path from req.file.path and validate it.
+- upload this img to cloudinary and validate it.
+- now update avatar url based on cloudinary url.
+- now same for coverImage.
+- send response.
+
+> **write subscription model**
+
