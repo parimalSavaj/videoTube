@@ -136,3 +136,26 @@ for this type of info update, write different routs for batter way.
 
 > **write subscription model**
 
+> `8. get channel profile`
+
+- get channel name from req.params.
+- validate it.
+- write aggregate query
+  - first write match case
+  - then join with subscriptions table or document, for subscribers get or count.
+  - then a again write other join query for subscribedTo
+  - then add this field to user table or document.
+  - and select it's what what filed you want.
+
+> `9. get watch history of user`
+
+get can not pass directly req.user.\_id in side the aggregate query because write inside the aggregate query is directly pass in to mongoDB. so inside mongoDB he not get req.user.\_id
+
+write aggregate query.
+
+- first match data by id, but matching data pass mongoose.type.ObjectId not req.user.\_id
+- than connect user model to video model using lookup.
+  - than get video proper data we write nested aggregate pipeline for video model owner property.
+  - to handle this user data for owner filed we in side video model i can get only user name and other limited data.
+    - for this we have two way write inside this nested to nested pipeline or only nested pipeline.
+- add fields with pipeline output handle.
