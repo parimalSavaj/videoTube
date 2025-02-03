@@ -159,3 +159,10 @@ write aggregate query.
   - to handle this user data for owner filed we in side video model i can get only user name and other limited data.
     - for this we have two way write inside this nested to nested pipeline or only nested pipeline.
 - add fields with pipeline output handle.
+
+> **write some models**
+
+- comment.model
+- like.model
+- playlist.model
+- tweet.model
