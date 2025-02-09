@@ -180,3 +180,12 @@ write aggregate query.
 - get duration from this cloudinary response.
 - get owner using req.user
 - create video object.
+
+> `11. get all video's`
+
+- _page, limit, query, sortBy, sortType, userId_ get all things using **req.query**
+- setup Pagination using page & limit.
+- setup filters object using query & userID.(here use or operator between title, description, userID )
+- sorting setup using sortBy & sortType.
+- write query, and validate.
+- send response.
