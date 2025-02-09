@@ -171,6 +171,14 @@ write aggregate query.
 - playlist.model
 - tweet.model
 
+---
+
+---
+
+## video controller
+
+---
+
 > `10. how to upload video.`
 
 - handle by video file and thumbnail inside multer.(inside video.routers)
@@ -188,4 +196,11 @@ write aggregate query.
 - setup filters object using query & userID.(here use or operator between title, description, userID )
 - sorting setup using sortBy & sortType.
 - write query, and validate.
+- send response.
+
+> `12. get video by id`
+
+- get videoID from req.params
+- validate this videoID.
+- find id inside video model
 - send response.
