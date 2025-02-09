@@ -52,6 +52,10 @@ for any type of file like image, video etc.. hear used cloudinary for stored and
 
 scenario for any type of file upload :- first we stored this file is local server for temporary and after we upload on cloudinary than removed for local, for local stored in DiskStorage.
 
+---
+
+---
+
 ## start coding...
 
 > **write user and video model**
@@ -166,3 +170,13 @@ write aggregate query.
 - like.model
 - playlist.model
 - tweet.model
+
+> `10. how to upload video.`
+
+- handle by video file and thumbnail inside multer.(inside video.routers)
+- get video title and description from req.body
+- check this title and description if not so give an error
+- upload an cloudinary, check uploaded or not.
+- get duration from this cloudinary response.
+- get owner using req.user
+- create video object.
