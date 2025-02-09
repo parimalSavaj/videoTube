@@ -204,3 +204,11 @@ write aggregate query.
 - validate this videoID.
 - find id inside video model
 - send response.
+
+> `13. update video`
+
+- get videoID from req.params
+- get video details like title, description, thumbnail from req.body.
+- validate this videoID.
+- update video details what provide by user.
+- send response.

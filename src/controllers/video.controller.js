@@ -104,4 +104,39 @@ const getVideoById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, video, "video fetched by id successfully"));
 });
 
-export { uploadVideo, getAllVideos, getVideoById };
+const updateVideo = asyncHandler(async (req, res) => {
+  const { videoID } = req.params;
+  const { title, description } = req.body;
+
+  if (!mongoose.isValidObjectId(videoID)) {
+    throw new ApiError(400, "Invalid video ID");
+  }
+
+  const video = await Video.findById(videoID);
+
+  if (!video) {
+    throw new ApiError(400, "video not found.");
+  }
+
+  if (title) video.title = title;
+  if (description) video.description = description;
+  if (req.file) {
+    const thumbnailLocalPath = req.file.path;
+    
+    const cloudinaryResponse = await uploadOnCloudinary(thumbnailLocalPath);
+
+    if (!cloudinaryResponse?.url) {
+      throw new ApiError(500, "Error while uploading on thumbnail");
+    }
+
+    video.thumbnail = cloudinaryResponse.url;
+  }
+
+  const updatedVideo = await video.save();
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, updatedVideo, "video update successfully"));
+});
+
+export { uploadVideo, getAllVideos, getVideoById, updateVideo };
