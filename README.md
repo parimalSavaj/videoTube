@@ -212,3 +212,9 @@ write aggregate query.
 - validate this videoID.
 - update video details what provide by user.
 - send response.
+
+> `14. delete video`
+
+- get videoID from req.params
+- find and delete video
+- send response

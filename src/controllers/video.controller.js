@@ -1,10 +1,31 @@
 import fs from "node:fs";
+import { v2 as cloudinary } from "cloudinary";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Video } from "../models/video.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import mongoose, { mongo } from "mongoose";
+import { getPublicIdFromUrl } from "../utils/getPublicIdFromURL.js";
+
+async function deleteMedia(videoUrl, thumbnailUrl) {
+  try {
+    const videoPublicId = getPublicIdFromUrl(videoUrl);
+    const thumbnailPublicId = getPublicIdFromUrl(thumbnailUrl);
+    // Delete the video
+    await cloudinary.uploader.destroy(videoPublicId, {
+      resource_type: "video",
+    });
+    console.log(`Deleted video: ${videoPublicId}`);
+
+    // Delete the thumbnail
+    await cloudinary.uploader.destroy(thumbnailPublicId);
+    console.log(`Deleted thumbnail: ${thumbnailPublicId}`);
+  } catch (error) {
+    console.log(error);
+    throw new ApiError(400, "Error deleting media:");
+  }
+}
 
 const uploadVideo = asyncHandler(async (req, res) => {
   const { title, description } = req.body;
@@ -122,7 +143,7 @@ const updateVideo = asyncHandler(async (req, res) => {
   if (description) video.description = description;
   if (req.file) {
     const thumbnailLocalPath = req.file.path;
-    
+
     const cloudinaryResponse = await uploadOnCloudinary(thumbnailLocalPath);
 
     if (!cloudinaryResponse?.url) {
@@ -139,4 +160,21 @@ const updateVideo = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, updatedVideo, "video update successfully"));
 });
 
-export { uploadVideo, getAllVideos, getVideoById, updateVideo };
+const deleteVideo = asyncHandler(async (req, res) => {
+  const { videoID } = req.params;
+
+  const video = await Video.findById(videoID);
+
+  if (!video) {
+    throw new ApiError(400, "video not found");
+  }
+
+  const { videoFile, thumbnail } = video;
+
+  await deleteMedia(videoFile, thumbnail);
+
+  await Video.findByIdAndDelete(videoID);
+
+  res.status(200).json(new ApiResponse(200, [], "video delete successfully"));
+});
+export { uploadVideo, getAllVideos, getVideoById, updateVideo, deleteVideo };
