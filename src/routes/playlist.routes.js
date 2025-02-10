@@ -2,6 +2,7 @@ import { Router } from "express";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
   createPlaylist,
+  getPlaylistById,
   getUserPlaylist,
 } from "../controllers/playlist.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -11,5 +12,6 @@ router.use(verifyJWT);
 
 router.route("/").post(createPlaylist);
 router.route("/user/:userID").get(getUserPlaylist);
+router.route("/:playListID").get(getPlaylistById);
 
 export default router;
