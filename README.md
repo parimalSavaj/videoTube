@@ -224,3 +224,18 @@ write aggregate query.
 - get videoID from req.params
 - check this ID is correct or not
 - get video object and update **isPublished** valid to true or false
+
+---
+
+---
+
+## playlist controller
+
+---
+
+> `16. create play list`
+
+- get play-list name and description from req.body.
+- validate this thing.
+- create playlist object with name, description, and owner id
+- send response.
