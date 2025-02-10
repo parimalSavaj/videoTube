@@ -239,3 +239,10 @@ write aggregate query.
 - validate this thing.
 - create playlist object with name, description, and owner id
 - send response.
+
+> `17. get user's playlist`
+
+- get userID from req.params
+- validate this userID
+- find this userID inside playlist model.
+- send response

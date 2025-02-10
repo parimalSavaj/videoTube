@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Playlist } from "../models/playlist.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -25,4 +26,20 @@ const createPlaylist = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, playlist, "play list created successfully"));
 });
 
-export { createPlaylist };
+const getUserPlaylist = asyncHandler(async (req, res) => {
+  const { userID } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(userID)) {
+    throw new ApiError(400, "invalid user id");
+  }
+
+  const userPlaylist = await Playlist.find({ owner: userID });
+
+  res
+    .status(200)
+    .json(
+      new ApiResponse(200, userPlaylist || [], "find playlist by user name")
+    );
+});
+
+export { createPlaylist, getUserPlaylist };
