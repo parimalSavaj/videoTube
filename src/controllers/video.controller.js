@@ -177,4 +177,37 @@ const deleteVideo = asyncHandler(async (req, res) => {
 
   res.status(200).json(new ApiResponse(200, [], "video delete successfully"));
 });
-export { uploadVideo, getAllVideos, getVideoById, updateVideo, deleteVideo };
+
+const togglePublishStatus = asyncHandler(async (req, res) => {
+  const { videoID } = req.params;
+
+  if (!videoID) {
+    throw new ApiError(400, "Video ID is required");
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(videoID)) {
+    throw new ApiError(400, "Invalid video ID");
+  }
+
+  const video = await Video.findById(videoID);
+  if (!video) {
+    throw new ApiError(400, "video not found");
+  }
+
+  video.isPublished = !video.isPublished;
+
+  const updatedVideo = await video.save();
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, updatedVideo, "toggle successfully"));
+});
+
+export {
+  uploadVideo,
+  getAllVideos,
+  getVideoById,
+  updateVideo,
+  deleteVideo,
+  togglePublishStatus,
+};

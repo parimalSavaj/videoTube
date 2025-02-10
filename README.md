@@ -218,3 +218,9 @@ write aggregate query.
 - get videoID from req.params
 - find and delete video
 - send response
+
+> `15. toggle publish status of video`
+
+- get videoID from req.params
+- check this ID is correct or not
+- get video object and update **isPublished** valid to true or false
