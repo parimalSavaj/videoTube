@@ -82,6 +82,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
   //* setup where condition(filters object)
   const filters = {
+    isPublished: true,
     $or: [
       { title: new RegExp(query, "i") },
       { description: new RegExp(query, "i") },
