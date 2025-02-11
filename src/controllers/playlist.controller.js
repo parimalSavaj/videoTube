@@ -56,4 +56,31 @@ const getPlaylistById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, playlist || [], "find playlist successfully"));
 });
 
-export { createPlaylist, getUserPlaylist, getPlaylistById };
+const addVideoToPlaylist = asyncHandler(async (req, res) => {
+  const { playListID, videoID } = req.params;
+
+  if (
+    !(
+      mongoose.Types.ObjectId.isValid(playListID) &&
+      mongoose.Types.ObjectId.isValid(videoID)
+    )
+  ) {
+    throw new ApiError(400, "invalid playList or video id");
+  }
+
+  const playlist = await Playlist.findById(playListID);
+
+  if (playlist.owner !== req.user._id) {
+    throw new ApiError(401, "you can't add modify other's playlist");
+  }
+
+  if (playlist.videos.includes(videoID)) {
+    throw new ApiError(401, "video already exists");
+  }
+
+  playlist.videos.push(videoID);
+  const updatedPlaylist = await playlist.save();
+
+  res.status(200).ApiResponse(200, updatedPlaylist, "video add successfully");
+});
+export { createPlaylist, getUserPlaylist, getPlaylistById, addVideoToPlaylist };

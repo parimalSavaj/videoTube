@@ -253,3 +253,13 @@ write aggregate query.
 - validate this id
 - find this id inside playlist model
 - send response
+
+> `19. add video inside playlist`
+
+- get playlist id and videoId from req.params
+- validate this playlist and video id.
+- get playlist from model
+- check current user and this playlist owner are same, if not so give error "can not modify"
+- check Video already exists or not
+- push video id inside video filed
+- send response
