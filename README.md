@@ -263,3 +263,12 @@ write aggregate query.
 - check Video already exists or not
 - push video id inside video filed
 - send response
+
+> `20. remove video from playlist`
+
+- get video and playlist id
+- validate this playlist and video id.
+- get playlist from model
+- check current user and this playlist owner are same, if not so give error "can not modify"
+- remove video id
+- send response
