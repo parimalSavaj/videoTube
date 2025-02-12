@@ -263,7 +263,15 @@ write aggregate query.
 - set name and description to playlist and save it
 - send response.
 
-> `20. add video inside playlist`
+> `20. delete playlist`
+
+- get playlist id from req.params
+- get playlist from mongoes
+- check current user and this playlist owner are same, if not so give error "can not modify"
+- delete playlist
+- send response
+
+> `21. add video inside playlist`
 
 - get playlist id and videoId from req.params
 - validate this playlist and video id.
@@ -273,7 +281,7 @@ write aggregate query.
 - push video id inside video filed
 - send response
 
-> `21. remove video from playlist`
+> `22. remove video from playlist`
 
 - get video and playlist id
 - validate this playlist and video id.

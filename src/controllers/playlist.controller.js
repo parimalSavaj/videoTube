@@ -86,6 +86,25 @@ const updatePlaylist = asyncHandler(async (req, res) => {
     );
 });
 
+const deletePlaylist = asyncHandler(async (req, res) => {
+  const { playListID } = req.params;
+
+  const playlist = await Playlist.findById(playListID);
+  if (!playlist) {
+    throw new ApiError(400, "playlist id not found");
+  }
+
+  if (!playlist.owner.equals(req.user._id)) {
+    throw new ApiError(401, "you can't delete other's playlist");
+  }
+
+  await playlist.deleteOne();
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, [], "playlist deleted successfully"));
+});
+
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
   const { playListID, videoID } = req.params;
 
@@ -149,4 +168,5 @@ export {
   addVideoToPlaylist,
   removeVideoFromPlaylist,
   updatePlaylist,
+  deletePlaylist,
 };
