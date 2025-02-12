@@ -56,6 +56,36 @@ const getPlaylistById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, playlist || [], "find playlist successfully"));
 });
 
+const updatePlaylist = asyncHandler(async (req, res) => {
+  const { playListID } = req.params;
+  const { name, description } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(playListID)) {
+    throw new ApiError(400, "invalid playList or video id");
+  }
+
+  if (!(name && description)) {
+    throw new ApiError(400, "name and description required");
+  }
+
+  const playlist = await Playlist.findById(playListID);
+
+  if (!playlist.owner.equals(req.user._id)) {
+    throw new ApiError(401, "you can't modify other's playlist");
+  }
+
+  playlist.name = name;
+  playlist.description = description;
+
+  const updatedPlaylist = await playlist.save();
+
+  res
+    .status(200)
+    .json(
+      new ApiResponse(200, updatedPlaylist, "updated playlist successfully")
+    );
+});
+
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
   const { playListID, videoID } = req.params;
 
@@ -70,7 +100,7 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
 
   const playlist = await Playlist.findById(playListID);
 
-  if (playlist.owner !== req.user._id) {
+  if (!playlist.owner.equals(req.user._id)) {
     throw new ApiError(401, "you can't add modify other's playlist");
   }
 
@@ -100,8 +130,8 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
 
   const playlist = await Playlist.findById(playListID);
 
-  if (playlist.owner !== req.user._id) {
-    throw new ApiError(401, "you can't add modify other's playlist");
+  if (!playlist.owner.equals(req.user._id)) {
+    throw new ApiError(401, "you can't remove modify other's playlist");
   }
 
   playlist.videos.pop(videoID);
@@ -118,4 +148,5 @@ export {
   getPlaylistById,
   addVideoToPlaylist,
   removeVideoFromPlaylist,
+  updatePlaylist,
 };

@@ -6,6 +6,7 @@ import {
   getPlaylistById,
   getUserPlaylist,
   removeVideoFromPlaylist,
+  updatePlaylist,
 } from "../controllers/playlist.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
@@ -14,8 +15,8 @@ router.use(verifyJWT);
 
 router.route("/").post(createPlaylist);
 router.route("/user/:userID").get(getUserPlaylist);
-router.route("/:playListID").get(getPlaylistById);
-router.route("/add/:videoID/playlistID").patch(addVideoToPlaylist);
-router.route("/remove/:videoID/playlistID").patch(removeVideoFromPlaylist);
+router.route("/:playListID").get(getPlaylistById).patch(updatePlaylist);
+router.route("/add/:videoID/:playListID").patch(addVideoToPlaylist);
+router.route("/remove/:videoID/:playListID").patch(removeVideoFromPlaylist);
 
 export default router;
