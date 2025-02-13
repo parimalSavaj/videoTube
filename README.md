@@ -329,3 +329,19 @@ write aggregate query.
 - check current user and this tweet owner are same, if not so give error "can not modify"
 - delete tweet
 - send response
+
+---
+
+---
+
+## Comments controller
+
+---
+
+> `27. get video comments`
+
+- get video id from params
+- get page and limit from query
+- validate video id
+- find by video id inside comment
+- send response
