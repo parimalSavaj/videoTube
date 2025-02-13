@@ -320,3 +320,12 @@ write aggregate query.
 - check current user and this tweet owner are same, if not so give error "can not modify"
 - change content for tweet
 - send response
+
+> `26. delete tweet`
+
+- get tweet id from req.params
+- validate this tweet id
+- get tweet object based on tweet id
+- check current user and this tweet owner are same, if not so give error "can not modify"
+- delete tweet
+- send response

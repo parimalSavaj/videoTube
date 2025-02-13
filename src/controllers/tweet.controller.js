@@ -3,6 +3,7 @@ import { Tweet } from "../models/tweet.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { text } from "express";
 
 const createTweet = asyncHandler(async (req, res) => {
   const { content } = req.body;
@@ -67,4 +68,23 @@ const updateTweet = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, { tweet }, "Tweet updated successfully"));
 });
-export { createTweet, getUserTweets, updateTweet };
+
+const deleteTweet = asyncHandler(async (req, res) => {
+  const { tweetId } = req.params;
+
+  if (!(tweetId && mongoose.Types.ObjectId.isValid(tweetId))) {
+    throw new ApiError(400, "invalid tweet id");
+  }
+
+  const tweet = await Tweet.findById(tweetId);
+
+  if (tweet.owner.toString() !== req.user._id.toString()) {
+    throw new ApiError(403, "You are not authorized to delete this tweet");
+  }
+
+  await tweet.deleteOne();
+
+  res.status(200).json(new ApiResponse(200, {}, "tweet delete successfully"));
+});
+
+export { createTweet, getUserTweets, updateTweet, deleteTweet };
