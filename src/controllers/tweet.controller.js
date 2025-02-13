@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Tweet } from "../models/tweet.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -20,4 +21,25 @@ const createTweet = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, { tweet }, "Tweet created successfully"));
 });
 
-export { createTweet };
+const getUserTweets = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  if (!(userId && mongoose.Types.ObjectId.isValid(userId))) {
+    throw new ApiError(400, "invalid user id");
+  }
+
+  const tweets = await Tweet.find({ owner: userId }).populate(
+    "owner",
+    "username email fullName"
+  );
+
+  if (!tweets) {
+    throw new ApiError(404, "No tweets found for this user");
+  }
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, { tweets }, "User tweets fetched successfully"));
+});
+
+export { createTweet, getUserTweets };

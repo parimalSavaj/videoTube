@@ -302,5 +302,12 @@ write aggregate query.
 
 - get content from req.body
 - validate this data
-- create tweet set content and owner using req.user._id
+- create tweet set content and owner using req.user.\_id
+- send response
+
+> `24. get tweet by user id`
+
+- get user id from req.params
+- validate this user id
+- get all tweet based on this user id
 - send response
