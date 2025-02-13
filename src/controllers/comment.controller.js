@@ -32,4 +32,27 @@ const getVideoComments = asyncHandler(async (req, res) => {
   );
 });
 
-export { getVideoComments };
+const addComment = asyncHandler(async (req, res) => {
+  const { videoId } = req.params;
+  const { content } = req.body;
+
+  if (!content || content.trim() === "") {
+    throw new ApiError(400, "Comment content cannot be empty");
+  }
+
+  if (!(videoId && mongoose.Types.ObjectId.isValid(videoId))) {
+    throw new ApiError(400, "Invalid video id");
+  }
+
+  const comment = await Comment.create({
+    content,
+    video: videoId,
+    owner: req.user._id,
+  });
+
+  res
+    .status(201)
+    .json(new ApiResponse(201, { comment }, "Comment created successfully"));
+});
+
+export { getVideoComments, addComment };

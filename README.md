@@ -345,3 +345,10 @@ write aggregate query.
 - validate video id
 - find by video id inside comment
 - send response
+
+> `28. add comment to video`
+
+- get video id from params and get content from req.body
+- validate this id and content
+- create comment object
+- send response
