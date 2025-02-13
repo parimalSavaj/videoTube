@@ -73,8 +73,6 @@ const updateComment = asyncHandler(async (req, res) => {
 
   const comment = await Comment.findById(commentId);
 
-  console.log(comment);
-
   if (!comment) {
     throw new ApiError(404, "Comment not found, invalid comment id");
   }
@@ -91,4 +89,28 @@ const updateComment = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { comment }, "Comment updated successfully"));
 });
 
-export { getVideoComments, addComment, updateComment };
+const deleteComment = asyncHandler(async (req, res) => {
+  const { videoId, commentId } = req.params;
+
+  if (!(commentId && mongoose.Types.ObjectId.isValid(commentId))) {
+    throw new ApiError(400, "Invalid comment id");
+  }
+
+  const comment = await Comment.findById(commentId);
+
+  if (!comment) {
+    throw new ApiError(404, "Comment not found, invalid comment id");
+  }
+
+  if (comment.owner.toString() !== req.user._id.toString()) {
+    throw new ApiError(403, "You are not allowed to delete this comment");
+  }
+
+  await Comment.findByIdAndDelete(commentId);
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, [], "Comment deleted successfully"));
+});
+
+export { getVideoComments, addComment, updateComment, deleteComment };

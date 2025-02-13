@@ -361,3 +361,15 @@ write aggregate query.
 - check current user and this comment owner are same, if not so give error "can not modify"
 - change content of comment
 - send response
+
+> `30. delete comment`
+
+- get video and comment id,
+- validate this id's
+- check current user and this comment owner are same, if not so give error "can not modify"
+- delete this comment
+- send response
+
+---
+
+---
