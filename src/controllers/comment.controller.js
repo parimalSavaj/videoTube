@@ -55,4 +55,40 @@ const addComment = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, { comment }, "Comment created successfully"));
 });
 
-export { getVideoComments, addComment };
+const updateComment = asyncHandler(async (req, res) => {
+  const { videoId, commentId } = req.params;
+  const { content } = req.body;
+
+  if (!content || content.trim() === "") {
+    throw new ApiError(400, "Comment content cannot be empty");
+  }
+
+  //   if (!(videoId && mongoose.Types.ObjectId.isValid(videoId))) {
+  //     throw new ApiError(400, "Invalid video id");
+  //   }
+
+  if (!(commentId && mongoose.Types.ObjectId.isValid(commentId))) {
+    throw new ApiError(400, "Invalid comment id");
+  }
+
+  const comment = await Comment.findById(commentId);
+
+  console.log(comment);
+
+  if (!comment) {
+    throw new ApiError(404, "Comment not found, invalid comment id");
+  }
+
+  if (comment.owner.toString() !== req.user._id.toString()) {
+    throw new ApiError(403, "You are not allowed to update this comment");
+  }
+
+  comment.content = content;
+  await comment.save();
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, { comment }, "Comment updated successfully"));
+});
+
+export { getVideoComments, addComment, updateComment };

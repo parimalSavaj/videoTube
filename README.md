@@ -352,3 +352,12 @@ write aggregate query.
 - validate this id and content
 - create comment object
 - send response
+
+> `29. update comment`
+
+- get comment id from req.params and get content from req.body
+- validate this id and content
+- find comment based on id
+- check current user and this comment owner are same, if not so give error "can not modify"
+- change content of comment
+- send response
