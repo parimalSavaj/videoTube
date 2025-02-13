@@ -311,3 +311,12 @@ write aggregate query.
 - validate this user id
 - get all tweet based on this user id
 - send response
+
+> `25. update tweet`
+
+- get content from req.body and get tweet id from req.params
+- validate this content and tweet id
+- get tweet object based on this tweet id
+- check current user and this tweet owner are same, if not so give error "can not modify"
+- change content for tweet
+- send response

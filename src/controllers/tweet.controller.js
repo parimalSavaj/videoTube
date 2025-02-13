@@ -42,4 +42,29 @@ const getUserTweets = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { tweets }, "User tweets fetched successfully"));
 });
 
-export { createTweet, getUserTweets };
+const updateTweet = asyncHandler(async (req, res) => {
+  const { tweetId } = req.params;
+  const { content } = req.body;
+
+  if (!content || content.trim() === "") {
+    throw new ApiError(400, "Tweet content cannot be empty");
+  }
+
+  if (!(tweetId && mongoose.Types.ObjectId.isValid(tweetId))) {
+    throw new ApiError(400, "invalid tweet id");
+  }
+
+  const tweet = await Tweet.findById(tweetId);
+
+  if (tweet.owner.toString() !== req.user._id.toString()) {
+    throw new ApiError(403, "You are not authorized to update this tweet");
+  }
+
+  tweet.content = content;
+  await tweet.save();
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, { tweet }, "Tweet updated successfully"));
+});
+export { createTweet, getUserTweets, updateTweet };
