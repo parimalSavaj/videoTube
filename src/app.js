@@ -38,10 +38,12 @@ app.use(cookieParser());
 import userRoutes from "./routes/user.routes.js";
 import videoRoutes from "./routes/video.routes.js";
 import playlistRoutes from "./routes/playlist.routes.js"
+import tweetRoutes from "./routes/tweet.routes.js";
 
 //todo: routers declaration
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/video", videoRoutes);
 app.use("/api/v1/playlist", playlistRoutes);
+app.use("/api/v1/tweet", tweetRoutes);
 
 export default app;

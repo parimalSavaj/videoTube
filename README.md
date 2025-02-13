@@ -289,3 +289,18 @@ write aggregate query.
 - check current user and this playlist owner are same, if not so give error "can not modify"
 - remove video id
 - send response
+
+---
+
+---
+
+## tweet controller
+
+---
+
+> `23. create Tweet`
+
+- get content from req.body
+- validate this data
+- create tweet set content and owner using req.user._id
+- send response
