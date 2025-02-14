@@ -387,3 +387,13 @@ write aggregate query.
 - if found video id inside like object so delete this object
 - else create like object with this videoID and user.\_id
 - send response
+
+> `32.toggle like on comment`
+
+- get comment id from req.params
+- validate this comment id
+- get comment object based on this comment id
+- find like object based on this comment id
+- if found comment id inside like object so delete this object
+- else create like object with this comment id and user.\_id
+- send response

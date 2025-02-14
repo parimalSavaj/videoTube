@@ -23,13 +23,13 @@ const toggleVideoLike = asyncHandler(async (req, res) => {
     likedBy: req.user._id,
   });
 
-  console.log(existingLike);
-
   if (existingLike) {
     console.log("Deleting existing like");
-    
+
     await existingLike.deleteOne();
-    return res.status(200).json(new ApiResponse(200, {}, "Like removed successfully"));
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Like removed successfully"));
   }
 
   const like = await Like.create({
@@ -42,4 +42,34 @@ const toggleVideoLike = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, { like }, "Video liked successfully"));
 });
 
-export { toggleVideoLike };
+const toggleCommentLike = asyncHandler(async (req, res) => {
+  const { commentID } = req.params;
+
+  if (!(commentID && mongoose.Types.ObjectId.isValid(commentID))) {
+    throw new ApiError(400, "Invalid comment id");
+  }
+
+  const existingLike = await Like.findOne({
+    comment: commentID,
+    likedBy: req.user._id,
+  });
+
+  if (existingLike) {
+    await existingLike.deleteOne();
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Like removed successfully"));
+  }
+
+  const like = await Like.create({
+    comment: commentID,
+    likedBy: req.user._id,
+  });
+
+  res
+    .status(201)
+    .json(new ApiResponse(201, { like }, "Comment liked successfully"));
+});
+
+export { toggleVideoLike, toggleCommentLike };
