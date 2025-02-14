@@ -373,3 +373,17 @@ write aggregate query.
 ---
 
 ---
+
+## like controller
+
+---
+
+> `31. toggle like on video`
+
+- get videoID from req.params
+- validate this videoID
+- get video object based on it's videoID
+- find like object based on this videoID
+- if found video id inside like object so delete this object
+- else create like object with this videoID and user.\_id
+- send response
