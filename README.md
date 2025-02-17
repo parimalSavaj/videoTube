@@ -407,3 +407,9 @@ write aggregate query.
 - if found tweet id inside like object so delete this object
 - else create like object with this tweet id and user.\_id
 - send response
+
+> `34. get like videos by current user`
+
+- get current user by req.user.\_id
+- find likeBy by current user and video field exists
+- send response
