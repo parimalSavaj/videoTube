@@ -436,3 +436,9 @@ write aggregate query.
 - if found any object so delete this object
 - other which create new subscription object; subscriber : req.user.\_id and channel : channelId
 - send response
+
+> `37. based on userId list channel to subscribed`
+
+- get user id from req.user.\_id
+- find user id from subscription model subscriber field
+- send response

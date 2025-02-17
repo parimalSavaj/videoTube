@@ -43,4 +43,13 @@ const toggleSubscription = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, subscriber, "Subscribe successfully"));
 });
-export { getSubscribedChannels, toggleSubscription };
+
+const getUserChannels = asyncHandler(async (req, res) => {
+  const channelList = await Subscription.find({ subscriber: req.user._id });
+
+  res
+    .status(201)
+    .json(new ApiResponse(201, channelList, "find channel list successfully"));
+});
+
+export { getSubscribedChannels, toggleSubscription, getUserChannels };
