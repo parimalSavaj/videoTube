@@ -422,9 +422,17 @@ write aggregate query.
 
 ---
 
-> `35. based on channel list-out user.`
+> `35. based on channel list-out user(subscriber).`
 
 - get channel id from req.params
 - validate this channel id
 - find channel id from subscription model and channel field
+- send response
+
+> `36. toggle subscription`
+
+- get channel id from req.params
+- based on req.user.\_id find inside subscription model subscriber field
+- if found any object so delete this object
+- other which create new subscription object; subscriber : req.user.\_id and channel : channelId
 - send response
