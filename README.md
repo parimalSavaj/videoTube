@@ -413,3 +413,18 @@ write aggregate query.
 - get current user by req.user.\_id
 - find likeBy by current user and video field exists
 - send response
+
+---
+
+---
+
+## Subscription controller
+
+---
+
+> `35. based on channel list-out user.`
+
+- get channel id from req.params
+- validate this channel id
+- find channel id from subscription model and channel field
+- send response
