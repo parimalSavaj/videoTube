@@ -7,6 +7,7 @@ import { Video } from "../models/video.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import mongoose, { mongo } from "mongoose";
 import { getPublicIdFromUrl } from "../utils/getPublicIdFromURL.js";
+import { User } from "../models/user.model.js";
 
 async function deleteMedia(videoUrl, thumbnailUrl) {
   try {
@@ -110,6 +111,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
 const getVideoById = asyncHandler(async (req, res) => {
   const { videoID } = req.params;
+  const userID = req.user._id;
 
   if (!mongoose.isValidObjectId(videoID)) {
     throw new ApiError(400, "Invalid video ID");
@@ -119,6 +121,21 @@ const getVideoById = asyncHandler(async (req, res) => {
 
   if (!video) {
     throw new ApiError(404, "video id not found");
+  }
+
+  if (userID) {
+    const user = await User.findById(userID);
+
+    const alreadyWatched = user.watchHistory.includes(videoID);
+
+    if (!alreadyWatched) {
+      await Promise.all([
+        Video.findByIdAndUpdate(videoID, { $inc: { views: 1 } }),
+        User.findByIdAndUpdate(userID, {
+          $addToSet: { watchHistory: videoID },
+        }),
+      ]);
+    }
   }
 
   return res

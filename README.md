@@ -203,6 +203,8 @@ write aggregate query.
 - get videoID from req.params
 - validate this videoID.
 - find id inside video model
+- add this video id inside watchHistory of user
+- increment views by 1 
 - send response.
 
 > `13. update video`
