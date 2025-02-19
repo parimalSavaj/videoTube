@@ -1,3 +1,14 @@
+# Video Sharing Platform - Backend Development
+> `Tech Stack:` **Node.js, Express.js, MongoDB, JWT, bcrypt, Cloudinary, Multer**
+
+- Designed and developed a RESTful API for a video-sharing platform, handling user authentication, video management, and subscriptions.
+- Implemented JWT-based authentication with secure password hashing using bcrypt.
+- Developed file upload functionality using Multer and Cloudinary, enabling video and image storage.
+- Built a commenting, liking, and subscription system, allowing users to engage with content.
+- Implemented pagination, filtering, and sorting for efficient data retrieval.
+- Optimized database queries and used Mongoose aggregate pipelines for analytics and dashboard reporting.
+- Followed MVC architecture and integrated middleware like CORS, cookie-parser, and request validation for enhanced security and performance.
+
 ## setup steps for project.
 
 > `step 1`
