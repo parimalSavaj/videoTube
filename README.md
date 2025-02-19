@@ -442,3 +442,27 @@ write aggregate query.
 - get user id from req.user.\_id
 - find user id from subscription model subscriber field
 - send response
+
+---
+
+---
+
+## dashboard controller
+
+---
+
+> `38. channel stats`
+
+- get channel id
+- based on this channel id get total video and count this total videos
+- how run loop on this total video and get video id, title, views, likes to this video
+- get total subscribers based on this channel id
+- send response
+
+> `39. channel by total videos`
+
+- group by channel id
+- get total videos based on group by channel id
+- count this total videos
+- get video basic details
+- send response
